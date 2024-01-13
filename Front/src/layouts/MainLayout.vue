@@ -24,18 +24,69 @@
       show-if-above
       bordered
     >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
+    <q-list>
+        <q-item-label header>
         </q-item-label>
-
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
+        <!-- UTILIZAR LA PROPIEDAD expand-icon en los  nodos de q-expansion-item para colocar un ícono-->
+        <q-expansion-item expand-separator label="Reservaciones" caption="">
+          <q-item to="/categories" clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon name="category" />
+            </q-item-section>
+            <q-item-section>Categorías</q-item-section>
+          </q-item>
+          <q-item to="/sub_categories" clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon :name="currentIcon" />
+            </q-item-section>
+            <q-item-section>Subcategorías</q-item-section>
+          </q-item>
+          <q-item to="/brand" clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon name="check_circle_outline" />
+            </q-item-section>
+            <q-item-section>Marca</q-item-section>
+          </q-item>
+          <q-item to="/name_brand" clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon name="draw" />
+            </q-item-section>
+            <q-item-section>Nombre de la marca</q-item-section>
+          </q-item>
+          <q-item to="/types" clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon name="app_registration" />
+            </q-item-section>
+            <q-item-section>Tipos</q-item-section>
+          </q-item>
+          <q-item to="/articles" clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon name="shopping_basket" />
+            </q-item-section>
+            <q-item-section>Articulos</q-item-section>
+          </q-item>
+          <q-item to="/branch_offices" clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon name="apartment" />
+            </q-item-section>
+            <q-item-section>Sucursales</q-item-section>
+          </q-item>
+        </q-expansion-item>
+        <q-expansion-item expand-separator label="Configuración" caption="">
+          <q-item to="/accounts" clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon name="manage_accounts" />
+            </q-item-section>
+            <q-item-section>Cuentas</q-item-section>
+          </q-item>
+          <q-item to="/users" clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon name="manage_accounts" />
+            </q-item-section>
+            <q-item-section>Usuarios</q-item-section>
+          </q-item>
+        </q-expansion-item>
+        <!-- <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link" /> -->
       </q-list>
     </q-drawer>
 
@@ -47,7 +98,8 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
+//import EssentialLink from 'components/EssentialLink.vue'
+import { api } from 'boot/axios'
 
 const linksList = [
   {
@@ -98,7 +150,7 @@ export default defineComponent({
   name: 'MainLayout',
 
   components: {
-    EssentialLink
+    //EssentialLink
   },
 
   setup () {
