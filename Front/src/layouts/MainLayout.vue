@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          Quasar App
+          Hotel Jardin de Jaluco
         </q-toolbar-title>
 
         <div>Quasar v{{ $q.version }}</div>
