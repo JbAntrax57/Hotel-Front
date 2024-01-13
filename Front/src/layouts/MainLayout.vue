@@ -31,45 +31,43 @@
         <q-expansion-item expand-separator label="Reservaciones" caption="">
           <q-item to="/categories" clickable v-ripple>
             <q-item-section avatar>
-              <q-icon name="category" />
+              <q-icon name="hotel_class" />
             </q-item-section>
-            <q-item-section>Categorías</q-item-section>
+            <q-item-section>Registrar</q-item-section>
           </q-item>
           <q-item to="/sub_categories" clickable v-ripple>
             <q-item-section avatar>
-              <q-icon :name="currentIcon" />
+              <q-icon name="preview" />
             </q-item-section>
-            <q-item-section>Subcategorías</q-item-section>
+            <q-item-section>Mostrar Reservaciones</q-item-section>
           </q-item>
-          <q-item to="/brand" clickable v-ripple>
+        </q-expansion-item>
+        <q-expansion-item expand-separator label="Habitaciones" caption="">
+          <q-item to="/categories" clickable v-ripple>
             <q-item-section avatar>
-              <q-icon name="check_circle_outline" />
+              <q-icon name="bedroom_child" />
             </q-item-section>
-            <q-item-section>Marca</q-item-section>
+            <q-item-section>Estado Habitaciones</q-item-section>
           </q-item>
-          <q-item to="/name_brand" clickable v-ripple>
+          <q-item to="/sub_categories" clickable v-ripple>
             <q-item-section avatar>
-              <q-icon name="draw" />
+              <q-icon name="night_shelter" />
             </q-item-section>
-            <q-item-section>Nombre de la marca</q-item-section>
+            <q-item-section>Precio Habitaciones</q-item-section>
           </q-item>
-          <q-item to="/types" clickable v-ripple>
+        </q-expansion-item>
+        <q-expansion-item expand-separator label="Recepcion" caption="">
+          <q-item to="/categories" clickable v-ripple>
             <q-item-section avatar>
-              <q-icon name="app_registration" />
+              <q-icon name="point_of_sale" />
             </q-item-section>
-            <q-item-section>Tipos</q-item-section>
+            <q-item-section>Corte de caja</q-item-section>
           </q-item>
-          <q-item to="/articles" clickable v-ripple>
+          <q-item to="/sub_categories" clickable v-ripple>
             <q-item-section avatar>
-              <q-icon name="shopping_basket" />
+              <q-icon name="price_check" />
             </q-item-section>
-            <q-item-section>Articulos</q-item-section>
-          </q-item>
-          <q-item to="/branch_offices" clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon name="apartment" />
-            </q-item-section>
-            <q-item-section>Sucursales</q-item-section>
+            <q-item-section>Pagos caja</q-item-section>
           </q-item>
         </q-expansion-item>
         <q-expansion-item expand-separator label="Configuración" caption="">
