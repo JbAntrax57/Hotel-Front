@@ -13,9 +13,8 @@
 
         <q-toolbar-title>
           Hotel Jardin de Jaluco
+          <q-img src="/src/assets/logohotel.png" style="width: 50px; height: 45px; margin-left: 450px;" />
         </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
     </q-header>
 
