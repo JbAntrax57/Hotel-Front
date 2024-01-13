@@ -52,10 +52,11 @@
                 ]" />
             </q-card-section>
             <q-card v-morph:card1:mygroup:500.resize="morphGroupModel"
-              class="absolute-bottom-left bg-white text-white text-center">
+              class="absolute-bottom-left bg-white text-white text-center" :class="{ 'isMobile': this.$isMobile() }"
+              :style="!this.$isMobile() ? 'width: 40rem; left: -32% !important;' : ''">
               <div :class="$q.dark.isActive ? 'theme-dark background-gray' : 'background-gray'" style="padding: 0%;">
                 <div :class="$q.dark.isActive ? 'theme-dark background-white' : 'background-white'">
-                  <q-card-section >
+                  <q-card-section :class="{ 'q-pb-none': this.$isMobile() }">
                     <q-btn class="q-mt-md" style="float: left;" color="primary" size="md" icon="arrow_back"
                       @click="reload" round>
                       <q-tooltip class="bg-primary text-body2 shadow-5" :offset="[10, 10]">
@@ -69,7 +70,7 @@
                     <div class="text-grey-8">Registrar cuenta</div>
                   </q-card-section>
 
-                  <q-card-section>
+                  <q-card-section :class="{ 'q-pb-none': this.$isMobile() }">
                     <div class="row q-pa-md q-col-gutter-xs">
                       <div class="col-xs-12 col-sm-3">
                         <q-input dense outlined v-model="account.code" label="Código" :rules="accountCodeRule"
@@ -126,7 +127,7 @@
                   </q-card-section>
                   <q-page-sticky v-if="this.$isMobile()" position="bottom-right" :offset="fabPos" :disable="draggingFab"
                     v-touch-pan.prevent.mouse="moveFab">
-                    <q-btn fab icon="person_add" color="primary" @click="verifyEmail" >
+                    <q-btn fab icon="person_add" color="primary" @click="verifyEmail">
                     </q-btn>
                   </q-page-sticky>
 
@@ -151,10 +152,8 @@
 
 <script>
 import { api } from 'boot/axios'
-import { defineComponent } from 'vue'
 import { required, email, numeric } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
-
 import { useStore } from 'vuex'
 
 export default {
@@ -306,21 +305,29 @@ export default {
           return false
         }
         this.loadingBtn = true
-        const cretentials = { ...this.form.fields }
-        const { data } = await api.post('logIn', cretentials);
-        this.$notify(data.message)
-        if (data.result) {
-          const token = data.token
-          if (token) {
-            localStorage.setItem('USER', JSON.stringify(data.dataUser))
-            localStorage.setItem('authToken', token)
-            this.$store.dispatch('login/setUserDataAction', JSON.stringify(data.dataUser))
-            this.$store.dispatch('login/setJWAction', token)
-            this.$router.push('/')
+        await api.get('sanctum/csrf-cookie').then(async data => {
+          if (data.status === 204) {
+            const cretentials = { ...this.form.fields }
+            const { data } = await api.post('logIn', cretentials);
+            this.$notify(data.message)
+            if (data.result) {
+              const token = data.token
+              if (token) {
+                localStorage.setItem('USER', JSON.stringify(data.dataUser))
+                localStorage.setItem('authToken', token)
+                this.$store.dispatch('login/setUserDataAction', JSON.stringify(data.dataUser))
+                this.$store.dispatch('login/setJWAction', token)
+                this.$router.push('/')
+              }
+            } else {
+              this.$router.push('/login')
+            }
+          } else {
+            console.log('no funcionó')
           }
-        } else {
-          this.$router.push('/login')
-        }
+        });
+
+
       } catch (error) {
         console.error('Error de inicio de sesión:', error);
       }
