@@ -13,8 +13,19 @@
 
         <q-toolbar-title>
           Hotel Jardin de Jaluco
-          <q-img src="/src/assets/logohotel.png" style="width: 50px; height: 45px; margin-left: 450px;" />
         </q-toolbar-title>
+        <div class="q-my-4">
+          <q-img src="/src/assets/logohotel.png" style="width: 50px; height: 45px;" />
+          <q-btn-dropdown flat color="white" :label="dataUser?.name" dropdown-icon="settings">
+            <q-list class="q-my-4">
+              <q-item clickable v-close-popup @click="logOut">
+                <q-item-section>
+                  <q-item-label>Cerrar Sesión</q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-btn-dropdown>
+        </div>
       </q-toolbar>
     </q-header>
 

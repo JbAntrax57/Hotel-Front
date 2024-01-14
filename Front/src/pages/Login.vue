@@ -125,14 +125,14 @@
                           :options="[
                             { label: 'MATUTINO',  value: 'M'},
                             { label: 'VESPERTINO',  value: 'V'}
-                          ]" :rules="turnRules" />
+                          ]" :rules="turnRules" :isDense="true" />
                       </div>
                       <div class="col-xs-12 col-sm-4">
                         <SelectComponent v-model="form.fieldsRegister.role" clearable label="Rol" icon="manage_accounts"
                           :options="[
                             { label: 'GERENTE',  value: 'G'},
                             { label: 'EMPLEADO',  value: 'E'}
-                          ]" :rules="roleRules" />
+                          ]" :rules="roleRules" :isDense="true" />
                       </div>
                     </div>
                   </q-card-section>

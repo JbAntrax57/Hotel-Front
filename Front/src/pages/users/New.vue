@@ -51,13 +51,13 @@
             <SelectComponent v-model="user.turn" clearable label="Turno" icon="style" :options="[
               { label: 'MATUTINO', value: 'M' },
               { label: 'VESPERTINO', value: 'V' }
-            ]" :rules="turnRules" />
+            ]" :rules="turnRules" :isDense="false" :error="v$.user.turn.$error" />
           </div>
           <div class="col-xs-12 col-sm-4">
             <SelectComponent v-model="user.role" clearable label="Rol" icon="manage_accounts" :options="[
               { label: 'GERENTE', value: 'G' },
               { label: 'EMPLEADO', value: 'E' }
-            ]" :rules="roleRules" />
+            ]" :rules="roleRules" :isDense="false" :error="v$.user.role.$error" />
           </div>
         </div>
       </div>
@@ -86,11 +86,9 @@ export default {
       phone: { required, numeric },
     },
   },
-  components: {
-    SelectComponent
-  },
   setup: () => ({ v$: useVuelidate() }),
   components: {
+    SelectComponent,
     BreadCrumbIndexComponent
   },
   computed: {
@@ -179,6 +177,12 @@ export default {
   },
   methods: {
     async saveData(val) {
+      this.v$.user.$reset()
+      this.v$.user.$touch()
+      if (this.v$.user.$error) {
+        this.$notify(this.$messageValidate);
+        return false
+      }
       this.$loading()
       const params = { ...this.user }
       const { data: { message } } = await api.post('users', params)

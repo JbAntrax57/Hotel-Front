@@ -4,7 +4,7 @@
     <q-select
       class="field_color"
       emit-value
-      dense
+      :dense="isDense"
       fill-input
       filled
       hide-selected
@@ -42,6 +42,9 @@
     icon: {
       type: String,
       default: ''
+    },
+    isDense: {
+      type: Boolean
     }
     // error: {
     //   type: Boolean,
@@ -55,6 +58,7 @@
   let label = ref(props.label)
   let options = ref(props.options)
   let icon = ref(props.icon)
+  let isDense = ref(props.isDense)
   // let error = ref(props.error)
   
   let filteredOptions = ref([... options.value ])

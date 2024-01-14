@@ -18,7 +18,7 @@ export default ({ app }) => {
   app.config.globalProperties.$messageValidate = {
     message: 'Revisa las validaciones',
     color: 'warning',
-    position: 'top-right',
+    position: 'top',
     icon: 'warning',
     timeout: 5000
   };
