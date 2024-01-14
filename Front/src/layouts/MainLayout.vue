@@ -53,6 +53,12 @@
           </q-item>
         </q-expansion-item>
         <q-expansion-item expand-separator label="Habitaciones" caption="">
+          <q-item to="/rooms" clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon name="bed" />
+            </q-item-section>
+            <q-item-section>Habitaciones</q-item-section>
+          </q-item>
           <q-item to="/categories" clickable v-ripple>
             <q-item-section avatar>
               <q-icon name="bedroom_child" />
@@ -64,6 +70,14 @@
               <q-icon name="night_shelter" />
             </q-item-section>
             <q-item-section>Precio Habitaciones</q-item-section>
+          </q-item>
+        </q-expansion-item>
+        <q-expansion-item expand-separator label="Tipo de habitaciones" caption="">
+          <q-item to="/types" clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon name="app_registration" />
+            </q-item-section>
+            <q-item-section>Tipo de habitaciones</q-item-section>
           </q-item>
         </q-expansion-item>
         <q-expansion-item expand-separator label="Recepcion" caption="">
