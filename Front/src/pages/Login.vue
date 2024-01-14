@@ -72,36 +72,33 @@
 
                   <q-card-section :class="{ 'q-pb-none': this.$isMobile() }">
                     <div class="row q-pa-md q-col-gutter-xs">
-                      <div class="col-xs-12 col-sm-3">
-                        <q-input dense outlined v-model="account.code" label="Código" :rules="accountCodeRule"
-                          :error="v$.account.code.$error" @blur="account.code = account.code.toUpperCase()">
-                        </q-input>
-                      </div>
-                      <div class="col-xs-12 col-sm-5">
-                        <q-input dense outlined v-model="account.name" label="Nombre de la cuenta" clearable
-                          clear-icon="close" :rules="accountNameRule" :error="v$.account.code.$error"
-                          @blur="account.name = account.name.toUpperCase()">
+                      <div class="col-xs-12 col-sm-4">
+                        <q-input dense outlined v-model="form.fieldsRegister.name" label="Nombre" clearable
+                          clear-icon="close" :rules="nameRule" :error="v$.form.fieldsRegister.name.$error"
+                          @blur="form.fieldsRegister.name = form.fieldsRegister.name.toUpperCase()">
                         </q-input>
                       </div>
                       <div class="col-xs-12 col-sm-4">
-                        <q-input dense outlined v-model="account.business_name" label="Razón social"
-                          :rules="accountBussinesNameRule" :error="v$.account.business_name.$error"
-                          @blur="account.business_name = account.business_name.toUpperCase()">
+                        <q-input dense outlined v-model="form.fieldsRegister.last_name" label="Apellido Paterno"
+                          :rules="lastNameRule" :error="v$.form.fieldsRegister.last_name.$error"
+                          @blur="form.fieldsRegister.last_name = form.fieldsRegister.last_name.toUpperCase()">
                         </q-input>
                       </div>
                       <div class="col-xs-12 col-sm-4">
-                        <q-input dense outlined v-model="account.rfc" label="RFC" :rules="accountRFCRule"
-                          :error="v$.account.rfc.$error" @blur="account.rfc = account.rfc.toUpperCase()">
+                        <q-input dense outlined v-model="form.fieldsRegister.second_last_name" label="Apellido Materno"
+                          :rules="secondLastNameRule" :error="v$.form.fieldsRegister.second_last_name.$error"
+                          @blur="form.fieldsRegister.second_last_name = form.fieldsRegister.second_last_name.toUpperCase()">
                         </q-input>
                       </div>
                       <div class="col-xs-12 col-sm-4">
-                        <q-input dense outlined v-model="account.address" label="Domicilio" :rules="accountAddressRule"
-                          :error="v$.account.address.$error" @blur="account.address = account.address.toUpperCase()">
+                        <q-input dense outlined v-model="form.fieldsRegister.address" label="Domicilio"
+                          :rules="addressRule" :error="v$.form.fieldsRegister.address.$error"
+                          @blur="form.fieldsRegister.address = form.fieldsRegister.address.toUpperCase()">
                         </q-input>
                       </div>
                       <div class="col-xs-12 col-sm-4">
-                        <q-input dense outlined v-model="account.zip_code" label="Código postal"
-                          :rules="accountZipCodeRule" :error="v$.account.zip_code.$error">
+                        <q-input dense outlined v-model="form.fieldsRegister.phone" label="Número de telefono"
+                          :rules="phoneRules" :error="v$.form.fieldsRegister.phone.$error">
                         </q-input>
                       </div>
                       <div class="col-xs-12 col-sm-4">
@@ -122,6 +119,20 @@
                               @click="isPwd = !isPwd" />
                           </template>
                         </q-input>
+                      </div>
+                      <div class="col-xs-12 col-sm-4">
+                        <SelectComponent v-model="form.fieldsRegister.turn" clearable label="Turno" icon="style"
+                          :options="[
+                            { label: 'MATUTINO',  value: 'M'},
+                            { label: 'VESPERTINO',  value: 'V'}
+                          ]" :rules="turnRules" />
+                      </div>
+                      <div class="col-xs-12 col-sm-4">
+                        <SelectComponent v-model="form.fieldsRegister.role" clearable label="Rol" icon="manage_accounts"
+                          :options="[
+                            { label: 'GERENTE',  value: 'G'},
+                            { label: 'EMPLEADO',  value: 'E'}
+                          ]" :rules="roleRules" />
                       </div>
                     </div>
                   </q-card-section>
@@ -155,6 +166,7 @@ import { api } from 'boot/axios'
 import { required, email, numeric } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
 import { useStore } from 'vuex'
+import SelectComponent from '../components/form/SelectComponent.vue'
 
 export default {
   name: 'LoginComponent',
@@ -165,37 +177,30 @@ export default {
         password: { required }
       },
       fieldsRegister: {
-        name: { required },
         email: { required, email },
-        password: { required }
+        password: { required },
+        name: { required },
+        address: { required },
+        last_name: { required },
+        second_last_name: { required },
+        turn: { required },
+        role: { required },
+        phone: { required, numeric },
       }
     },
-    account: {
-      code: { required },
-      name: { required },
-      business_name: { required },
-      rfc: { required },
-      address: { required },
-      zip_code: { required, numeric }
-    }
   },
   created() {
     // this.toggleTheme()
   },
   setup: () => ({ v$: useVuelidate() }),
+  components: {
+    SelectComponent
+  },
   data() {
     return {
       draggingFab: false,
       fabPos: [18, 18],
       // themeToggled: this.$store.getters['theme/getTheme'] === 'true',
-      account: {
-        code: null,
-        name: null,
-        business_name: null,
-        rfc: null,
-        address: null,
-        zip_code: null
-      },
       isPwd: true,
       form: {
         fields: {
@@ -204,11 +209,14 @@ export default {
         },
         fieldsRegister: {
           name: '',
+          last_name: '',
+          second_last_name: '',
+          phone: null,
+          address: '',
+          turn: null,
           email: '',
           password: '',
-          token_verification: '',
-          urlServer: window.location.origin,
-          encryptData: ''
+          role: null
         }
       },
       nextMorphStep: {
@@ -226,35 +234,40 @@ export default {
     }
   },
   computed: {
-    accountZipCodeRule() {
+    turnRules() {
       return [
-        () => !this.v$.account.zip_code.required.$invalid || 'El campo es requerido.',
-        () => !this.v$.account.zip_code.numeric.$invalid || 'El campo debe ser numérico.'
+          () => !this.v$.form.fieldsRegister.turn.required.$invalid || 'El campo es requerido.'
       ]
     },
-    accountAddressRule() {
+    roleRules() {
       return [
-        () => !this.v$.account.address.required.$invalid || 'El campo es requerido.'
+          () => !this.v$.form.fieldsRegister.role.required.$invalid || 'El campo es requerido.'
       ]
     },
-    accountRFCRule() {
+    nameRule() {
       return [
-        () => !this.v$.account.rfc.required.$invalid || 'El campo es requerido.'
+        () => !this.v$.form.fieldsRegister.name.required.$invalid || 'El campo es requerido.'
       ]
     },
-    accountBussinesNameRule() {
+    lastNameRule() {
       return [
-        () => !this.v$.account.business_name.required.$invalid || 'El campo es requerido.'
+        () => !this.v$.form.fieldsRegister.last_name.required.$invalid || 'El campo es requerido.'
       ]
     },
-    accountNameRule() {
+    secondLastNameRule() {
       return [
-        () => !this.v$.account.name.required.$invalid || 'El campo es requerido.'
+        () => !this.v$.form.fieldsRegister.second_last_name.required.$invalid || 'El campo es requerido.'
       ]
     },
-    accountCodeRule() {
+    addressRule() {
       return [
-        () => !this.v$.account.code.required.$invalid || 'El campo es requerido.'
+        () => !this.v$.form.fieldsRegister.address.required.$invalid || 'El campo es requerido.'
+      ]
+    },
+    phoneRules() {
+      return [
+        () => !this.v$.form.fieldsRegister.phone.required.$invalid || 'El campo es requerido.',
+        () => !this.v$.form.fieldsRegister.phone.numeric.$invalid || 'El campo debe ser numérico.'
       ]
     },
     emailRules() {
@@ -339,14 +352,11 @@ export default {
     async verifyEmail() {
       this.v$.form.fieldsRegister.$reset()
       this.v$.form.fieldsRegister.$touch()
-      this.v$.account.$reset()
-      this.v$.account.$touch()
-      if (this.v$.form.fieldsRegister.$error && this.v$.account.$error) {
+      if (this.v$.form.fieldsRegister.$error) {
         this.$notify(this.$messageValidate)
         return false
       }
       this.loadingBtn = true
-      this.form.fieldsRegister.encryptData = this.encryptData()
       try {
         const params = { ...this.form.fieldsRegister }
         const { data } = await api.post('verifyEmail', params)
@@ -359,18 +369,6 @@ export default {
       }
       this.loadingBtn = false
       this.nextMorph()
-    },
-    encryptData() {
-      const toEncryptData = {}
-      toEncryptData.user = this.form.fieldsRegister
-      toEncryptData.account = this.account
-      const jsonData = JSON.stringify(toEncryptData);
-      const cipher = CryptoJS.AES.encrypt(jsonData, CryptoJS.enc.Utf8.parse('82f2ceed4c503896c8a291e560bd4325'), {
-        iv: CryptoJS.enc.Utf8.parse('sinasinasisinaaa'),
-        mode: CryptoJS.mode.CBC
-      })
-
-      return cipher.toString()
     },
     toggleTheme() {
       if (!this.themeToggled) {
@@ -428,5 +426,4 @@ export default {
 .my-custom-toggle-active {
   background-color: #000000;
   /* Dark theme background color */
-}
-</style>
+}</style>

@@ -4,6 +4,7 @@
     <q-select
       class="field_color"
       emit-value
+      dense
       fill-input
       filled
       hide-selected

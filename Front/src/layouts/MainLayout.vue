@@ -70,12 +70,6 @@
           </q-item>
         </q-expansion-item>
         <q-expansion-item expand-separator label="Configuración" caption="">
-          <q-item to="/accounts" clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon name="manage_accounts" />
-            </q-item-section>
-            <q-item-section>Cuentas</q-item-section>
-          </q-item>
           <q-item to="/users" clickable v-ripple>
             <q-item-section avatar>
               <q-icon name="manage_accounts" />

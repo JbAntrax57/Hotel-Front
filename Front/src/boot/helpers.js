@@ -4,7 +4,7 @@ export default ({ app }) => {
   app.config.globalProperties.$loading = (message = 'Cargando...') => {
     Loading.show({
       spinner: false,
-      message: `<img style="width: 50%" alt="Logo Salud" src="https://elpacientecolombiano.com/wp-content/uploads/2015/09/LOGO-SALUD-MORADO.png"><br/>${message}`,
+      message: `<img style="width: 50%" alt="Logo Hotel" src="src/assets/logohotel.png"><br/>${message}`,
       html: true,
       messageColor: 'white'
     });
