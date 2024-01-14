@@ -1,8 +1,9 @@
-
+import verifyToken from 'src/middleware/auth';
 const routes = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
+    // beforeEnter: verifyToken,
     children: [
       { path: '', component: () => import('pages/IndexPage.vue') },
       { path: '/users', component: () => import('pages/users/Index.vue') },

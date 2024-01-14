@@ -10,38 +10,60 @@
             <q-input filled v-model="user.name" label="Nombre" clearable clear-icon="close"
               :rules="nameRule" :error="v$.user.name.$error" color="white" dark bg-color="blue-8"
               @blur="user.name = user.name.toUpperCase()">
+              <template v-slot:prepend>
+                <q-icon name="draw" />
+              </template>
             </q-input>
           </div>
           <div class="col-xs-12 col-sm-4">
             <q-input filled v-model="user.last_name" label="Apellido Paterno" :rules="lastNameRule"
               :error="v$.user.name.$error" color="white" dark bg-color="blue-8"
               @blur="user.last_name = user.last_name.toUpperCase()">
+              <template v-slot:prepend>
+                <q-icon name="draw" />
+              </template>
             </q-input>
           </div>
           <div class="col-xs-12 col-sm-4">
             <q-input filled v-model="user.second_last_name" label="Apellido Materno"
               :rules="secondLastNameRule" :error="v$.user.second_last_name.$error" color="white" dark bg-color="blue-8"
               @blur="user.second_last_name = user.second_last_name.toUpperCase()">
+              <template v-slot:prepend>
+                <q-icon name="draw" />
+              </template>
             </q-input>
           </div>
           <div class="col-xs-12 col-sm-4">
             <q-input filled v-model="user.address" label="Domicilio" :rules="addressRule"
               :error="v$.user.address.$error" color="white" dark bg-color="blue-8"
               @blur="user.address = user.address.toUpperCase()">
+              <template v-slot:prepend>
+                <q-icon name="signpost" />
+              </template>
             </q-input>
           </div>
           <div class="col-xs-12 col-sm-4">
             <q-input filled v-model="user.phone" label="Número de telefono" :rules="phoneRules" color="white" dark bg-color="blue-8"
               :error="v$.user.phone.$error">
+              <template v-slot:prepend>
+                <q-icon name="phone_iphone" />
+              </template>
             </q-input>
           </div>
           <div class="col-xs-12 col-sm-4">
             <q-input filled :rules="emailRegisterRules" :error="v$.user.email.$error" color="white" dark bg-color="blue"
-              v-model="user.email" clearable clear-icon="close" label="Correo" />
+              v-model="user.email" clearable clear-icon="close" label="Correo" >
+              <template v-slot:prepend>
+                <q-icon name="mail" />
+              </template>
+            </q-input>
           </div>
           <div class="col-xs-12 col-sm-4">
             <q-input filled :rules="passwordRegisterRules" :error="v$.user.password.$error" color="white" dark bg-color="blue"
               v-model="user.password" :type="isPwd ? 'password' : 'text'" label="Contraseña">
+              <template v-slot:prepend>
+                <q-icon name="password" />
+              </template>
               <template v-slot:append>
                 <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
               </template>
@@ -183,10 +205,10 @@ export default {
         this.$notify(this.$messageValidate);
         return false
       }
-      this.$loading()
+      this.$loading('Guardando usuario...')
       const params = { ...this.user }
-      const { data: { message } } = await api.post('users', params)
-      this.$notify(message.message)
+      const { data } = await api.post('users', params)
+      this.$notify(data.message)
       this.clearFields()
       this.$q.loading.hide()
     },
@@ -194,6 +216,11 @@ export default {
       this.user.name = null
       this.user.email = null
       this.user.password = null
+      this.user.role = null
+      this.user.turn = null
+      this.user.address = null
+      this.user.last_name = null
+      this.user.second_last_name = null
     }
   }
 }

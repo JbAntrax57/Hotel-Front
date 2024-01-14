@@ -326,10 +326,10 @@ export default {
             if (data.result) {
               const token = data.token
               if (token) {
-                localStorage.setItem('USER', JSON.stringify(data.dataUser))
+                /* localStorage.setItem('USER', JSON.stringify(data.dataUser))
                 localStorage.setItem('authToken', token)
                 this.$store.dispatch('login/setUserDataAction', JSON.stringify(data.dataUser))
-                this.$store.dispatch('login/setJWAction', token)
+                this.$store.dispatch('login/setJWAction', token) */
                 this.$router.push('/')
               }
             } else {
