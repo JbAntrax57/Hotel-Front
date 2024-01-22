@@ -65,7 +65,7 @@
             </q-item-section>
             <q-item-section>Estado Habitaciones</q-item-section>
           </q-item>
-          <q-item to="/sub_categories" clickable v-ripple>
+          <q-item to="/priceRooms" clickable v-ripple>
             <q-item-section avatar>
               <q-icon name="night_shelter" />
             </q-item-section>

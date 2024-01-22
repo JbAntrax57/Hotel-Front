@@ -14,7 +14,10 @@ const routes = [
       { path: '/types/:id', component: () => import('pages/types/Edit.vue') },
       { path: '/rooms', component: () => import('pages/rooms/Index.vue') },
       { path: '/rooms/new', component: () => import('pages/rooms/New.vue') },
-      { path: '/rooms/:id', component: () => import('pages/rooms/Edit.vue') }
+      { path: '/rooms/:id', component: () => import('pages/rooms/Edit.vue') },
+      { path: '/priceRooms', component: () => import('pages/PriceRooms/Index.vue') },
+      { path: '/priceRooms/:id', component: () => import('pages/PriceRooms/Edit.vue') },
+      { path: '/priceRooms/new', component: () => import('pages/PriceRooms/New.vue') }
     ]
   },
   { path: '/login', name: 'login', component: () => import('pages/Login.vue') },
